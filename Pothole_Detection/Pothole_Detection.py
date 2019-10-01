@@ -13,12 +13,18 @@ import numpy as np
 import pygame
 import time
 import smtplib
+import sys
 from matplotlib import pyplot as plt
 
 
 # In[2]:
 
+file_name = 'pothole.jpg'
 
+
+#file name can be passed as an commandline argument.
+if sys.argv[1] != None:
+    file_name = sys.argv[1]
 # Show the image
 # Open a new thread to manage the external cv2 interaction
 cv2.startWindowThread()
@@ -73,7 +79,7 @@ def image_resize(image, width = None, height = None, inter = cv2.INTER_AREA):
 # In[4]:
 
 
-r_image1 = cv2.imread('Pothole.jpg')
+r_image1 = cv2.imread(file_name)
 r_image2 = image_resize(r_image1, width = 275, height = 180)
 
 
@@ -269,17 +275,17 @@ for c in contours:
     x,y,w,h = rect
     cv2.rectangle(img2,(x,y),(x+w,y+h),(0,255,0),8)
     cv2.putText(img2,'Moth Detected',(x+w+40,y+h),0,2.0,(0,255,0))
-    
+
     plt.title("Moth Detected Pothole Image")
     plt.imshow(img2)
     plt.show()
-    
+
 cv2.imshow("Show",img2)
 #cv2.imshow('img' , resize_img)
 x = cv2.waitKey(0)
 if x == 27:
     cv2.destroyWindow('img')
-cv2.waitKey()  
+cv2.waitKey()
 cv2.destroyAllWindows()
 
 
@@ -306,7 +312,7 @@ plt_show(blur)
 # In[34]:
 
 
-#guassian blur 
+#guassian blur
 gblur = cv2.GaussianBlur(im,(5,5),0)
 plt_show(gblur)
 
@@ -314,7 +320,7 @@ plt_show(gblur)
 # In[35]:
 
 
-#median 
+#median
 median = cv2.medianBlur(im,5)
 plt_show(median)
 
@@ -344,7 +350,7 @@ closing = cv2.morphologyEx(dilation, cv2.MORPH_CLOSE, kernel)
 
 
 #canny edge detection
-edges = cv2.Canny(dilation,9,220)  
+edges = cv2.Canny(dilation,9,220)
 
 
 # In[40]:
@@ -360,7 +366,7 @@ plt.show()
 
 
 plt.subplot(333),plt.imshow(gblur),plt.title('guassianblur')
-plt.xticks([]), plt.yticks([])  
+plt.xticks([]), plt.yticks([])
 plt.show()
 
 
@@ -368,7 +374,7 @@ plt.show()
 
 
 plt.subplot(334),plt.imshow(median),plt.title('Medianblur')
-plt.xticks([]), plt.yticks([]) 
+plt.xticks([]), plt.yticks([])
 plt.show()
 
 
@@ -404,7 +410,7 @@ plt.xticks([]), plt.yticks([])
 plt.show()
 
 
-# 
+#
 # #### Plot all images
 
 # In[47]:
@@ -414,9 +420,9 @@ plt.show()
 plt.subplot(332),plt.imshow(blur),plt.title('BLURRED')
 plt.xticks([]), plt.yticks([])
 plt.subplot(333),plt.imshow(gblur),plt.title('guassianblur')
-plt.xticks([]), plt.yticks([])        
+plt.xticks([]), plt.yticks([])
 plt.subplot(334),plt.imshow(median),plt.title('Medianblur')
-plt.xticks([]), plt.yticks([]) 
+plt.xticks([]), plt.yticks([])
 plt.subplot(337),plt.imshow(img,cmap = 'gray')
 plt.title('dilated Image'), plt.xticks([]), plt.yticks([])
 plt.subplot(338),plt.imshow(edges,cmap = 'gray')
@@ -442,7 +448,3 @@ time.sleep(5)
 # # End of Pothhole Detection Project
 
 # In[ ]:
-
-
-
-
